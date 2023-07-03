@@ -67,12 +67,20 @@ fs.readdir(srcDir, { withFileTypes: true }, (err, files) => {
 
 		// Add the specified fields to package.json
 		packageJson.exports = {
-			".": "./dist",
+			'.': {
+				types: './dist/index.js',
+				module: './dist/index.mjs',
+				default: './dist/index.js',
+			},
 			...directories.reduce((acc, dir) => {
 				const dirName = dir.name;
 				return {
 					...acc,
-					[`./${dirName}`]: `./dist/${dirName}`,
+					[`./${dirName}`]: {
+						types: `./dist/${dirName}/index.js`,
+						module: `./dist/${dirName}/index.mjs`,
+						default: `./dist/${dirName}/index.js`,
+					},
 				};
 			}, {}),
 			'./package.json': './package.json',

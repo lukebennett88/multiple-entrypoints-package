@@ -3,9 +3,21 @@
   "version": "0.0.0",
   "license": "MIT",
   "exports": {
-    ".": "./dist",
-    "./button": "./dist/button",
-    "./heading": "./dist/heading",
+    ".": {
+      "types": "./dist/index.js",
+      "module": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.js",
+      "module": "./dist/button/index.mjs",
+      "default": "./dist/button/index.js"
+    },
+    "./heading": {
+      "types": "./dist/heading/index.js",
+      "module": "./dist/heading/index.mjs",
+      "default": "./dist/heading/index.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.js",

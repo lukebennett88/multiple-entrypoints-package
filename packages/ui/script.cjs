@@ -64,15 +64,15 @@ fs.readdir(srcDir, { withFileTypes: true }, (err, files) => {
 					const trimmedData = data.trim();
 
 					if (trimmedData === '') {
-						fs.appendFile(gitignorePath, `${dirName}/\n`, (err) => {
+						fs.appendFile(gitignorePath, `${dirName}\n`, (err) => {
 							if (err) {
 								console.error(`Error updating .gitignore file:`, err);
 								return;
 							}
 							console.log(`Updated '.gitignore'`);
 						});
-					} else if (!trimmedData.includes(`${dirName}/`)) {
-						fs.appendFile(gitignorePath, `\n${dirName}/\n`, (err) => {
+					} else if (!trimmedData.includes(`${dirName}`)) {
+						fs.appendFile(gitignorePath, `\n${dirName}\n`, (err) => {
 							if (err) {
 								console.error(`Error updating .gitignore file:`, err);
 								return;

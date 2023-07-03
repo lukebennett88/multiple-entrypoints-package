@@ -1,5 +1,0 @@
-{
-  "main": "dist/button/button/index.js",
-  "module": "dist/button/index.mjs",
-  "types": "dist/button/index.d.ts"
-}

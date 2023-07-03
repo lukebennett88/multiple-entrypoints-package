@@ -1,0 +1,5 @@
+{
+  "main": "dist/heading/heading/index.js",
+  "module": "dist/heading/index.mjs",
+  "types": "dist/heading/index.d.ts"
+}

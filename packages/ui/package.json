@@ -2,13 +2,26 @@
   "name": "ui",
   "version": "0.0.0",
   "license": "MIT",
+  "exports": {
+    ".": "./dist",
+    "./button": "./dist/button",
+    "./heading": "./dist/heading",
+    "./package.json": "./package.json"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "button",
+    "heading"
+  ],
   "scripts": {
     "build": "tsup && node ./script.cjs",
+    "dev": "tsup --watch",
     "lint": "eslint \"**/*.ts*\""
   },
+  "dependencies": {},
   "devDependencies": {
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

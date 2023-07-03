@@ -1,10 +1,13 @@
-import { Button, Header } from "ui";
+"use client";
+
+import { Button } from "ui/button";
+import { Heading } from "ui/heading";
 
 export default function Page() {
   return (
     <>
-      <Header text="Web" />
-      <Button />
+      <Heading level="1">Web</Heading>
+      <Button onClick={() => alert("boop")}>Click me</Button>
     </>
   );
 }

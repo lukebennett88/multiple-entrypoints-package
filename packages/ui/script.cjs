@@ -6,6 +6,7 @@ const path = require('node:path');
 
 const srcDir = path.join(__dirname, 'src');
 const packagesDir = __dirname;
+const gitignorePath = path.join(__dirname, '.gitignore');
 const packageJsonPath = path.join(__dirname, 'package.json');
 
 // Read the source directory
@@ -33,9 +34,9 @@ fs.readdir(srcDir, { withFileTypes: true }, (err, files) => {
 			// Create the package.json file inside the new folder
 			const packageJsonContent = JSON.stringify(
 				{
-					main: `dist/${dirName}/${dirName}/index.js`,
-					module: `dist/${dirName}/index.mjs`,
-					types: `dist/${dirName}/index.d.ts`,
+					main: `../dist/${dirName}/index.js`,
+					module: `../dist/${dirName}/index.esm.js`,
+					types: `../dist/${dirName}/index.d.ts`,
 				},
 				null,
 				2
@@ -52,6 +53,34 @@ fs.readdir(srcDir, { withFileTypes: true }, (err, files) => {
 				}
 				console.log(`Created '${packageJsonPath}'`);
 
+				// Update .gitignore only if the entry doesn't exist already
+				fs.readFile(gitignorePath, 'utf8', (err, data) => {
+					if (err) {
+						console.error(`Error reading .gitignore file:`, err);
+						return;
+					}
+
+					// Trim the data to remove leading/trailing whitespace
+					const trimmedData = data.trim();
+
+					if (trimmedData === '') {
+						fs.appendFile(gitignorePath, `${dirName}/\n`, (err) => {
+							if (err) {
+								console.error(`Error updating .gitignore file:`, err);
+								return;
+							}
+							console.log(`Updated '.gitignore'`);
+						});
+					} else if (!trimmedData.includes(`${dirName}/`)) {
+						fs.appendFile(gitignorePath, `\n${dirName}/\n`, (err) => {
+							if (err) {
+								console.error(`Error updating .gitignore file:`, err);
+								return;
+							}
+							console.log(`Updated '.gitignore'`);
+						});
+					}
+				});
 			});
 		});
 	});
@@ -68,8 +97,8 @@ fs.readdir(srcDir, { withFileTypes: true }, (err, files) => {
 		// Add the specified fields to package.json
 		packageJson.exports = {
 			'.': {
-				types: './dist/index.js',
-				module: './dist/index.mjs',
+				types: './dist/index.d.ts',
+				module: './dist/index.esm.js',
 				default: './dist/index.js',
 			},
 			...directories.reduce((acc, dir) => {
@@ -77,8 +106,8 @@ fs.readdir(srcDir, { withFileTypes: true }, (err, files) => {
 				return {
 					...acc,
 					[`./${dirName}`]: {
-						types: `./dist/${dirName}/index.js`,
-						module: `./dist/${dirName}/index.mjs`,
+						types: `./dist/${dirName}/index.d.ts`,
+						module: `./dist/${dirName}/index.esm.js`,
 						default: `./dist/${dirName}/index.js`,
 					},
 				};

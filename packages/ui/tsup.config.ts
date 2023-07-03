@@ -8,8 +8,8 @@ export default defineConfig((options) => ({
   format: ["cjs", "esm"],
 
   /** Ideally these should all be true, just trying to get this working for now */
-  minify: false,
-  splitting: false,
-  treeshake: false,
+  minify: true,
+  splitting: true,
+  treeshake: true,
   ...options,
 }));

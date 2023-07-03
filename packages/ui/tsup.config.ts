@@ -1,15 +1,18 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig((options) => ({
-  clean: !options.watch,
-  dts: true,
   entry: ["src/index.ts", "src/*/index.ts"],
   external: ["react"],
   format: ["cjs", "esm"],
-
-  /** Ideally these should all be true, just trying to get this working for now */
-  minify: true,
-  splitting: true,
-  treeshake: true,
+  dts: true,
+  clean: !options.watch,
+  minify: !options.watch,
+  splitting: !options.watch,
+  treeshake: !options.watch,
+  outExtension({ format }) {
+    return {
+      js: `${format === "esm" ? ".esm" : ""}.js`,
+    };
+  },
   ...options,
 }));
